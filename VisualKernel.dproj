@@ -104,13 +104,11 @@
         <DCCReference Include="src\Kernel.pas"/>
         <DCCReference Include="MainFrame.pas">
             <Form>frmMain</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="src\VCL\VCLKernel.pas"/>
         <DCCReference Include="src\VCL\WindowSkeleton.pas">
             <Form>WndSkeleton</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="src\VCL\Interfaces\InterfaceBasePanel.pas"/>
         <DCCReference Include="src\VCL\Interfaces\InterfaceVCLKernel.pas"/>

@@ -29,6 +29,9 @@ type
     property MainContainer : IContainer read GetMainContainer;
   end;
 
+var
+  MainKernel : IMainKernel;
+
 implementation
 
 end.

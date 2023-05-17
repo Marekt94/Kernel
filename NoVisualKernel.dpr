@@ -16,11 +16,9 @@ uses
   InterfaceKernel in 'src\Interfaces\InterfaceKernel.pas',
   InterfaceModule in 'src\Interfaces\InterfaceModule.pas';
 
-var
-  MainKernel : IMainKernel;
-
 begin
   try
+    ReportMemoryLeaksOnShutdown := true;
     MainKernel := TKernel.Create(nil);
     MainKernel.Open;
     MainKernel.Close;

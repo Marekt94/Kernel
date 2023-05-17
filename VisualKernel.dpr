@@ -7,6 +7,7 @@ uses
   madListProcesses,
   madListModules,
   Vcl.Forms,
+  System.SysUtils,
   BaseKernel in 'src\BaseKernel.pas',
   Kernel in 'src\Kernel.pas',
   MainFrame in 'MainFrame.pas' {frmMain: TFrame},
@@ -19,11 +20,12 @@ uses
 
 {$R *.res}
 
-var
-  MainKernel : IVCLKernel;
-
 begin
+  ReportMemoryLeaksOnShutdown := true;
   MainKernel := TVCLKernel.Create(nil);
-  MainKernel.Open(TfrmMain, 'Okno g³ówne');
-  MainKernel.Close;
+  if Supports(MainKernel, IVCLKernel) then
+  begin
+    (MainKernel as IVCLKernel).Open(TfrmMain, 'Okno g³ówne');
+    MainKernel.Close;
+  end;
 end.

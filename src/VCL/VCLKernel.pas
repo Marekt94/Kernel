@@ -6,7 +6,7 @@ uses
   InterfaceVCLKernel, InterfaceKernel, Kernel;
 
 type
-  TVCLKernel = class(TInterfacedObject, IVCLKernel)
+  TVCLKernel = class(TInterfacedObject, IMainKernel, IVCLKernel)
   strict private
     FKernel : IMainKernel;
   public
