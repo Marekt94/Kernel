@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{2813E661-2098-402F-AAFC-84EFC5941594}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="NoVisualKernel.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="VisualKernel.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="NoVisualKernel">
+        <MSBuild Projects="NoVisualKernel.dproj"/>
+    </Target>
+    <Target Name="NoVisualKernel:Clean">
+        <MSBuild Projects="NoVisualKernel.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="NoVisualKernel:Make">
+        <MSBuild Projects="NoVisualKernel.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VisualKernel">
+        <MSBuild Projects="VisualKernel.dproj"/>
+    </Target>
+    <Target Name="VisualKernel:Clean">
+        <MSBuild Projects="VisualKernel.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VisualKernel:Make">
+        <MSBuild Projects="VisualKernel.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="NoVisualKernel;VisualKernel"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="NoVisualKernel:Clean;VisualKernel:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="NoVisualKernel:Make;VisualKernel:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
