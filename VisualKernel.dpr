@@ -16,7 +16,8 @@ uses
   InterfaceBasePanel in 'src\VCL\Interfaces\InterfaceBasePanel.pas',
   InterfaceVCLKernel in 'src\VCL\Interfaces\InterfaceVCLKernel.pas',
   InterfaceKernel in 'src\Interfaces\InterfaceKernel.pas',
-  InterfaceModule in 'src\Interfaces\InterfaceModule.pas';
+  InterfaceModule in 'src\Interfaces\InterfaceModule.pas',
+  Module in 'src\Base classes\Module.pas';
 
 {$R *.res}
 

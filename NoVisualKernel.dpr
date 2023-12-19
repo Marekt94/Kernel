@@ -14,7 +14,8 @@ uses
   BaseKernel in 'src\BaseKernel.pas',
   Kernel in 'src\Kernel.pas',
   InterfaceKernel in 'src\Interfaces\InterfaceKernel.pas',
-  InterfaceModule in 'src\Interfaces\InterfaceModule.pas';
+  InterfaceModule in 'src\Interfaces\InterfaceModule.pas',
+  Module in 'src\Base classes\Module.pas';
 
 begin
   try
