@@ -6,15 +6,17 @@ uses
   InterfaceModule, System.Generics.Collections, ClassParams;
 
 type
-  TBaseModule = class(TInterfacedObject, IModule)
+  TBaseModule = class(TInterfacedObject, IModule, IPreferences)
   strict private
-    FObjectList :  TDictionary<TGUID, TClassParams>;
-    FSigleton   :  TDictionary<TGUID, IInterface>;
+    FObjectList  : TDictionary<TGUID, TClassParams>;
+    FSigleton    : TDictionary<TGUID, IInterface>;
+    FPreferences : TDictionary<string, string>;
     procedure RegisterClassInternal (p_GUID : TGUID; p_ClassParams : TClassParams);
     function CreateObjRTTI (const p_Class : TInterfacedClass) : IInterface;
   public
     constructor Create; virtual;
     destructor Destroy; override;
+    function GetModuleName : string;
     function OpenMainWindow : Integer; virtual;
     function OpenMainWindowInAddMode : Integer; virtual;
     function OpenModule : boolean; virtual;
@@ -22,6 +24,9 @@ type
     function GetObjectList : TDictionary<TGUID, TClassParams>;
     function GiveObjectByInterface (p_GUID : TGUID) : IInterface; virtual;
     function GetSelfInterface : TGUID; virtual;
+    function GetPreferences : TDictionary<string, string>;
+    function GetPreference(const p_Key : string) : string;
+    procedure SetPreference(const p_Key : string; const p_Value : string);
     function InterfaceExists (p_GUID : TGUID) : boolean;
     procedure RegisterClass (p_GUID : TGUID; p_Class : TInterfacedClass);
     procedure RegisterClassForSigleton(p_GUID : TGUID; p_Class : TInterfacedClass);
@@ -45,6 +50,7 @@ constructor TBaseModule.Create;
 begin
   FObjectList := TDictionary<TGUID, TClassParams>.Create;
   FSigleton   := TDictionary<TGUID, IInterface>.Create;
+  FPreferences := TDictionary<string, string>.Create;
 
   RegisterClasses;
 end;
@@ -66,12 +72,29 @@ destructor TBaseModule.Destroy;
 begin
   FreeAndNil (FSigleton);
   FreeAndNil (FObjectList);
+  FreeAndNil (FPreferences);
   inherited;
+end;
+
+function TBaseModule.GetModuleName: string;
+begin
+  Result := 'Base Module';
 end;
 
 function TBaseModule.GetObjectList: TDictionary<TGUID, TClassParams>;
 begin
   Result := FObjectList;
+end;
+
+function TBaseModule.GetPreference(const p_Key: string): string;
+begin
+  if not FPreferences.TryGetValue(p_Key, Result) then
+    Result := '';
+end;
+
+function TBaseModule.GetPreferences: TDictionary<string, string>;
+begin
+  Result := FPreferences;
 end;
 
 function TBaseModule.GetSelfInterface: TGUID;
@@ -149,6 +172,11 @@ begin
     raise Exception.Create(Format ('W j¹drze jest ju¿ zarejestrowany interfejs %s', [GUIDToString (p_GUID)]));
 
   FObjectList.Add (p_GUID, p_ClassParams);
+end;
+
+procedure TBaseModule.SetPreference(const p_Key, p_Value: string);
+begin
+  FPreferences.Add(p_Key, p_Value);
 end;
 
 procedure TBaseModule.UnregisterClass (p_GUID: TGUID);

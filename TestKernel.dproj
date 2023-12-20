@@ -92,6 +92,12 @@
         <DCCReference Include="src\Interfaces\InterfaceModule.pas"/>
         <DCCReference Include="src\Base classes\ClassParams.pas"/>
         <DCCReference Include="tests\test objects\Singleton.pas"/>
+        <DCCReference Include="src\Interfaces\InterfaceKernel.pas"/>
+        <DCCReference Include="src\BaseKernel.pas"/>
+        <DCCReference Include="src\Kernel.pas"/>
+        <DCCReference Include="src\Base classes\INIPreferenceRepository.pas"/>
+        <DCCReference Include="tests\TestIntegrationModule.pas"/>
+        <DCCReference Include="tests\test objects\ModulesForPreferences.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

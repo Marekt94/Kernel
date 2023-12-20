@@ -13,12 +13,30 @@ type
     procedure RegisterSigleton;
     [Test]
     procedure RegiesterClassNormal;
+    [Test]
+    procedure GetEmptyWhenNoPreference;
+    [Test]
+    procedure GetProperPreference;
   end;
 
 implementation
 
 uses
   Singleton;
+
+procedure TTestModule.GetEmptyWhenNoPreference;
+begin
+  var pomModule := TBaseModule.Create;
+
+  Assert.AreEqual('', pomModule.GetPreference('key'));
+end;
+
+procedure TTestModule.GetProperPreference;
+begin
+  var pomModule := TBaseModule.Create;
+  pomModule.SetPreference('key', 'value');
+  Assert.AreEqual('value', pomModule.GetPreference('key'));
+end;
 
 procedure TTestModule.RegiesterClassNormal;
 const

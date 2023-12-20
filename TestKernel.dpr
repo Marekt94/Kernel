@@ -17,7 +17,13 @@ uses
   Module in 'src\Base classes\Module.pas',
   InterfaceModule in 'src\Interfaces\InterfaceModule.pas',
   ClassParams in 'src\Base classes\ClassParams.pas',
-  Singleton in 'tests\test objects\Singleton.pas';
+  Singleton in 'tests\test objects\Singleton.pas',
+  InterfaceKernel in 'src\Interfaces\InterfaceKernel.pas',
+  BaseKernel in 'src\BaseKernel.pas',
+  Kernel in 'src\Kernel.pas',
+  INIPreferenceRepository in 'src\Base classes\INIPreferenceRepository.pas',
+  TestIntegrationModule in 'tests\TestIntegrationModule.pas',
+  ModulesForPreferences in 'tests\test objects\ModulesForPreferences.pas';
 
 { keep comment here to protect the following conditional from being removed by the IDE when adding a unit }
 {$IFNDEF TESTINSIGHT}

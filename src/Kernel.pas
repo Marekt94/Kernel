@@ -10,6 +10,7 @@ type
     strict private
       FObjectList : TList<IModule>;
       FContainer : IContainer;
+      FPreferenceRepository : IPreferenceRepository;
     protected
       FState : TKernelState;
     public
@@ -20,6 +21,7 @@ type
       procedure ReloadModules; virtual;
       procedure Open;
       procedure Close;
+      function GetPreferencesRepository : IPreferenceRepository;
       function GiveObjectByInterface (p_GUID : TGUID; p_Silent : boolean = false) : IInterface;
       function GetState : TKernelState;
       function GetMainContainer : IContainer;
@@ -39,8 +41,11 @@ end;
 
 procedure TKernel.CloseModules;
 begin
-  for var i := FObjectList.Count - 1 downto 0 do
-    FObjectList [i].CloseModule;
+  if Assigned(FPreferenceRepository) then
+    FPreferenceRepository.SavePreferences(FObjectList);
+
+  for var pomModule in FObjectList do
+    pomModule.CloseModule;
 end;
 
 constructor TKernel.Create (p_BaseKernel : IContainer);
@@ -60,6 +65,11 @@ begin
   Result := FContainer;
 end;
 
+function TKernel.GetPreferencesRepository: IPreferenceRepository;
+begin
+  Result := FPreferenceRepository;
+end;
+
 function TKernel.GetState: TKernelState;
 begin
   Result := FState;
@@ -67,8 +77,12 @@ end;
 
 procedure TKernel.OpenModules;
 begin
-  for var i := 0 to FObjectList.Count - 1 do
-    FObjectList [i].OpenModule;
+  for var pomModule in FObjectList do
+  begin
+    pomModule.OpenModule;
+    if Assigned(FPreferenceRepository) then
+      FPreferenceRepository.FillPreferences(pomModule);
+  end;
 end;
 
 procedure TKernel.ReloadModules;
