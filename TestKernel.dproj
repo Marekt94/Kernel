@@ -97,7 +97,6 @@
         <DCCReference Include="src\Kernel.pas"/>
         <DCCReference Include="src\Base classes\INIPreferenceRepository.pas"/>
         <DCCReference Include="tests\TestIntegrationModule.pas"/>
-        <DCCReference Include="tests\test objects\ModulesForPreferences.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

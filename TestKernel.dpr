@@ -22,8 +22,7 @@ uses
   BaseKernel in 'src\BaseKernel.pas',
   Kernel in 'src\Kernel.pas',
   INIPreferenceRepository in 'src\Base classes\INIPreferenceRepository.pas',
-  TestIntegrationModule in 'tests\TestIntegrationModule.pas',
-  ModulesForPreferences in 'tests\test objects\ModulesForPreferences.pas';
+  TestIntegrationModule in 'tests\TestIntegrationModule.pas';
 
 { keep comment here to protect the following conditional from being removed by the IDE when adding a unit }
 {$IFNDEF TESTINSIGHT}
