@@ -1,11 +1,6 @@
 program VisualKernel;
 
 uses
-  madExcept,
-  madLinkDisAsm,
-  madListHardware,
-  madListProcesses,
-  madListModules,
   Vcl.Forms,
   System.SysUtils,
   BaseKernel in 'src\BaseKernel.pas',
@@ -17,7 +12,8 @@ uses
   InterfaceVCLKernel in 'src\VCL\Interfaces\InterfaceVCLKernel.pas',
   InterfaceKernel in 'src\Interfaces\InterfaceKernel.pas',
   InterfaceModule in 'src\Interfaces\InterfaceModule.pas',
-  Module in 'src\Base classes\Module.pas';
+  Module in 'src\Base classes\Module.pas',
+  ClassParams in 'src\Base classes\ClassParams.pas';
 
 {$R *.res}
 

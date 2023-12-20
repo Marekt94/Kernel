@@ -115,6 +115,7 @@
         <DCCReference Include="src\Interfaces\InterfaceKernel.pas"/>
         <DCCReference Include="src\Interfaces\InterfaceModule.pas"/>
         <DCCReference Include="src\Base classes\Module.pas"/>
+        <DCCReference Include="src\Base classes\ClassParams.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

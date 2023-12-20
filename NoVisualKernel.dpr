@@ -5,17 +5,13 @@ program NoVisualKernel;
 {$R *.res}
 
 uses
-  madExcept,
-  madLinkDisAsm,
-  madListHardware,
-  madListProcesses,
-  madListModules,
   System.SysUtils,
   BaseKernel in 'src\BaseKernel.pas',
   Kernel in 'src\Kernel.pas',
   InterfaceKernel in 'src\Interfaces\InterfaceKernel.pas',
   InterfaceModule in 'src\Interfaces\InterfaceModule.pas',
-  Module in 'src\Base classes\Module.pas';
+  Module in 'src\Base classes\Module.pas',
+  ClassParams in 'src\Base classes\ClassParams.pas';
 
 begin
   try

@@ -30,12 +30,13 @@ type
     procedure Open;
     procedure Close;
     function GetPreferencesRepository : IPreferenceRepository;
+    procedure SetPreferencesRepository(const p_Value : IPreferenceRepository);
     function GiveObjectByInterface (p_GUID : TGUID; p_Silent : boolean = false) : IInterface;
     function GetState : TKernelState;
     function GetMainContainer : IContainer;
     property State : TKernelState read GetState;
     property MainContainer : IContainer read GetMainContainer;
-    property PreferenceRepository : IPreferenceRepository read GetPreferencesRepository;
+    property PreferenceRepository : IPreferenceRepository read GetPreferencesRepository write SetPreferencesRepository;
   end;
 
 var

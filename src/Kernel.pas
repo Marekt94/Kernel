@@ -21,6 +21,7 @@ type
       procedure ReloadModules; virtual;
       procedure Open;
       procedure Close;
+      procedure SetPreferencesRepository(const p_Value : IPreferenceRepository);
       function GetPreferencesRepository : IPreferenceRepository;
       function GiveObjectByInterface (p_GUID : TGUID; p_Silent : boolean = false) : IInterface;
       function GetState : TKernelState;
@@ -77,6 +78,8 @@ end;
 
 procedure TKernel.OpenModules;
 begin
+  if Assigned(FPreferenceRepository) then
+    FPreferenceRepository.LoadPreferences;
   for var pomModule in FObjectList do
   begin
     pomModule.OpenModule;
@@ -89,6 +92,12 @@ procedure TKernel.ReloadModules;
 begin
   CloseModules;
   OpenModules;
+end;
+
+procedure TKernel.SetPreferencesRepository(
+  const p_Value: IPreferenceRepository);
+begin
+  FPreferenceRepository := p_Value;
 end;
 
 procedure TKernel.Open;

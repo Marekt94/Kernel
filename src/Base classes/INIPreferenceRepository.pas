@@ -5,6 +5,9 @@ interface
 uses
   InterfaceKernel, InterfaceModule, System.Generics.Collections, System.IniFiles;
 
+const
+  PREFERENCES_NOT_LOADED = 'Preferences haven''t been loaded. Saving preferences before loading is prohibited';
+
 type
   TPreferenceRepository = class(TInterfacedObject, IPreferenceRepository)
   private
@@ -15,7 +18,6 @@ type
     procedure FillPreferences(p_Module : IModule);
     procedure SavePreferences(p_ModuleList : TList<IModule>);
   end;
-
 
 implementation
 
@@ -34,14 +36,17 @@ procedure TPreferenceRepository.FillPreferences(p_Module: IModule);
 var
   pomPrefs : IPreferences;
   pomPrefsList : TStringList;
-  pomArray : TArray<string>;
 begin
   if Supports(p_Module, IPreferences, pomPrefs) then
   begin
     pomPrefsList := TStringList.Create;
-    FINIFile.ReadSectionValues(p_Module.GetModuleName, pomPrefsList);
-    for var i := 0 to pomPrefsList.Count - 1 do
-      pomPrefs.SetPreference(pomPrefsList.Names[i], pomPrefsList.ValueFromIndex[i]);
+    try
+      FINIFile.ReadSectionValues(p_Module.GetModuleName, pomPrefsList);
+      for var i := 0 to pomPrefsList.Count - 1 do
+        pomPrefs.SetPreference(pomPrefsList.Names[i], pomPrefsList.ValueFromIndex[i]);
+    finally
+      pomPrefsList.Free;
+    end;
   end;
 end;
 
@@ -57,15 +62,22 @@ begin
   else
     pomPath := p_Path;
 
-  FINIFile := TMemIniFile.Create(p_Path);
+  FINIFile := TMemIniFile.Create(pomPath);
 end;
 
 procedure TPreferenceRepository.SavePreferences(p_ModuleList: TList<IModule>);
-const
-  cError = 'Preferences haven'' been loaded. Saving preferences before loading is prohibited';
+var
+  pomPreferences : IPreferences;
 begin
   if not Assigned(FINIFile) then
-    raise Exception.Create(cError);
+    raise Exception.Create(PREFERENCES_NOT_LOADED);
+
+  for var pomModule in p_ModuleList do
+    if Supports(pomModule, IPreferences, pomPreferences) then
+      for var pomPreference in pomPreferences.Preferences do
+        FINIFile.WriteString(pomModule.GetModuleName, pomPreference.Key, pomPreference.Value);
+
+  FINIFile.UpdateFile;
 end;
 
 end.
