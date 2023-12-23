@@ -3,7 +3,7 @@ unit Module;
 interface
 
 uses
-  InterfaceModule, System.Generics.Collections, ClassParams;
+  InterfaceModule, System.Generics.Collections, ClassParams, System.Rtti;
 
 type
   TBaseModule = class(TInterfacedObject, IModule, IPreferences)
@@ -12,7 +12,7 @@ type
     FSigleton    : TDictionary<TGUID, IInterface>;
     FPreferences : TDictionary<string, string>;
     procedure RegisterClassInternal (p_GUID : TGUID; p_ClassParams : TClassParams);
-    function CreateObjRTTI (const p_Class : TInterfacedClass) : IInterface;
+    function CreateObjRTTI (const p_Class : TInterfacedClass; p_Args : array of TValue) : IInterface;
   public
     constructor Create; virtual;
     destructor Destroy; override;
@@ -28,8 +28,8 @@ type
     function GetPreference(const p_Key : string) : string;
     procedure SetPreference(const p_Key : string; const p_Value : string);
     function InterfaceExists (p_GUID : TGUID) : boolean;
-    procedure RegisterClass (p_GUID : TGUID; p_Class : TInterfacedClass);
-    procedure RegisterClassForSigleton(p_GUID : TGUID; p_Class : TInterfacedClass);
+    procedure RegisterClass (p_GUID : TGUID; p_Class : TInterfacedClass; const p_Args : array of TValue);
+    procedure RegisterClassForSigleton(p_GUID : TGUID; p_Class : TInterfacedClass; const p_Args : array of TValue);
     procedure UnregisterClass (p_GUID : TGUID);
     procedure RegisterClasses; virtual;
   end;
@@ -37,7 +37,7 @@ type
 implementation
 
 uses
-  System.SysUtils, System.UITypes, System.Rtti;
+  System.SysUtils, System.UITypes;
 
 { TBaseModule }
 
@@ -55,7 +55,7 @@ begin
   RegisterClasses;
 end;
 
-function TBaseModule.CreateObjRTTI(const p_Class: TInterfacedClass): IInterface;
+function TBaseModule.CreateObjRTTI(const p_Class : TInterfacedClass; p_Args : array of TValue) : IInterface;
 var
   pomContext : TRTTIContext;
   pomType    : TRTTIType;
@@ -65,7 +65,7 @@ begin
   pomContext := TRttiContext.Create;
   pomType    := pomContext.GetType(p_Class);
 
-  Result := pomType.GetMethod(cConstructor).Invoke(pomType.AsInstance.MetaclassType, []).AsInterface;
+  Result := pomType.GetMethod(cConstructor).Invoke(pomType.AsInstance.MetaclassType, p_Args).AsInterface;
 end;
 
 destructor TBaseModule.Destroy;
@@ -113,12 +113,12 @@ begin
   begin
     if not FSigleton.TryGetValue(p_GUID, Result) then
     begin
-      Result := CreateObjRTTI(pomClass.FInterfacedClass);
+      Result := CreateObjRTTI(pomClass.FInterfacedClass, pomClass.FArgs);
       FSigleton.Add(p_GUID, Result);
     end
   end
   else
-    Result := CreateObjRTTI(pomClass.FInterfacedClass);
+    Result := CreateObjRTTI(pomClass.FInterfacedClass, pomClass.FArgs);
 end;
 
 function TBaseModule.InterfaceExists(p_GUID: TGUID): boolean;
@@ -141,11 +141,11 @@ begin
   Result := true;
 end;
 
-procedure TBaseModule.RegisterClass(p_GUID : TGUID; p_Class : TInterfacedClass);
+procedure TBaseModule.RegisterClass(p_GUID : TGUID; p_Class : TInterfacedClass; const p_Args : array of TValue);
 var
   pomClassParams : TClassParams;
 begin
-  pomClassParams := TClassParams.Create(p_Class);
+  pomClassParams := TClassParams.Create(p_Class, p_Args);
   RegisterClassInternal(p_GUID, pomClassParams);
 end;
 
@@ -154,12 +154,11 @@ begin
   //to be covered in descendant
 end;
 
-procedure TBaseModule.RegisterClassForSigleton(p_GUID: TGUID;
-  p_Class: TInterfacedClass);
+procedure TBaseModule.RegisterClassForSigleton(p_GUID : TGUID; p_Class : TInterfacedClass; const p_Args : array of TValue);
 var
   pomClassParams : TClassParams;
 begin
-  pomClassParams := TClassParams.Create(p_Class, true);
+  pomClassParams := TClassParams.Create(p_Class, p_Args, true);
   RegisterClassInternal(p_GUID, pomClassParams);
 end;
 

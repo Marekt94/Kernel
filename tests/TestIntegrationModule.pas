@@ -55,7 +55,6 @@ procedure TTestIntegrationModule.RasieExceptionWhenSavePreferencesWithoutLoad;
 var
   pomModule : IModule;
   pomPreference : IPreferences;
-  pomValue : string;
 begin
   pomModule := TBaseModule.Create;
   Supports(pomModule, IPreferences, pomPreference);

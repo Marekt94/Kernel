@@ -97,6 +97,7 @@
         <DCCReference Include="src\Kernel.pas"/>
         <DCCReference Include="src\Base classes\INIPreferenceRepository.pas"/>
         <DCCReference Include="tests\TestIntegrationModule.pas"/>
+        <DCCReference Include="tests\test objects\ControllerWithParameters.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -169,6 +170,12 @@
                     </Platform>
                     <Platform Name="Android64">
                         <RemoteDir>res\xml</RemoteDir>
+                        <Operation>1</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="AndroidGDBServer">
+                    <Platform Name="Android">
+                        <RemoteDir>library\lib\armeabi-v7a</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
                 </DeployClass>

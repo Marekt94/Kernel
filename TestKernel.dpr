@@ -22,7 +22,8 @@ uses
   BaseKernel in 'src\BaseKernel.pas',
   Kernel in 'src\Kernel.pas',
   INIPreferenceRepository in 'src\Base classes\INIPreferenceRepository.pas',
-  TestIntegrationModule in 'tests\TestIntegrationModule.pas';
+  TestIntegrationModule in 'tests\TestIntegrationModule.pas',
+  ControllerWithParameters in 'tests\test objects\ControllerWithParameters.pas';
 
 { keep comment here to protect the following conditional from being removed by the IDE when adding a unit }
 {$IFNDEF TESTINSIGHT}

@@ -3,7 +3,7 @@ unit InterfaceModule;
 interface
 
 uses
-  System.Generics.Collections, ClassParams;
+  System.Generics.Collections, ClassParams, System.Rtti;
 
 type
   IModule = interface (IInterface)
@@ -17,8 +17,12 @@ type
     function CloseModule : boolean;
     function OpenMainWindow : Integer;
     function OpenMainWindowInAddMode : Integer;
-    procedure RegisterClass (p_GUID : TGUID; p_Class : TInterfacedClass);
-    procedure RegisterClassForSigleton(p_GUID : TGUID; p_Class : TInterfacedClass);
+    procedure RegisterClass (p_GUID : TGUID;
+                             p_Class : TInterfacedClass;
+                             const p_Arg : array of TValue);
+    procedure RegisterClassForSigleton(p_GUID : TGUID;
+                                       p_Class : TInterfacedClass;
+                                       const p_Arg : array of TValue);
     procedure UnregisterClass (p_GUID : TGUID);
     procedure RegisterClasses;
     property ObjectList: TDictionary<TGUID, TClassParams> read GetObjectList;
