@@ -32,7 +32,7 @@ type
   IPreferences = interface(IInterface)
   ['{E5270C72-B519-46FA-B4D0-6FB6CAAC6F3D}']
     function GetPreferences : TDictionary<string, string>;
-    function GetPreference(const p_Key : string) : string;
+    function GetPreference(const p_Key : string; const p_Default : string = '') : string;
     procedure SetPreference(const p_Key : string; const p_Value : string);
     property Preferences : TDictionary<string, string> read GetPreferences;
   end;

@@ -82,9 +82,9 @@ begin
     FPreferenceRepository.LoadPreferences;
   for var pomModule in FObjectList do
   begin
-    pomModule.OpenModule;
     if Assigned(FPreferenceRepository) then
       FPreferenceRepository.FillPreferences(pomModule);
+    pomModule.OpenModule;
   end;
 end;
 

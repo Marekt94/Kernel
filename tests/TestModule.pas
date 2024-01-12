@@ -18,6 +18,8 @@ type
     [Test]
     procedure GetProperPreference;
     [Test]
+    procedure GetDefaultWhenNoPreference;
+    [Test]
     procedure GetObjectWithInitParameterString;
     [Test]
     procedure GetObjectWithInitParameterInteger;
@@ -31,6 +33,13 @@ implementation
 
 uses
   Singleton, ControllerWithParameters;
+
+procedure TTestModule.GetDefaultWhenNoPreference;
+begin
+  var pomModule := TBaseModule.Create;
+  pomModule.SetPreference('key', 'value');
+  Assert.AreEqual('default', pomModule.GetPreference('key2', 'default'));
+end;
 
 procedure TTestModule.GetEmptyWhenNoPreference;
 begin

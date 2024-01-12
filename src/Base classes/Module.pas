@@ -16,7 +16,7 @@ type
   public
     constructor Create; virtual;
     destructor Destroy; override;
-    function GetModuleName : string;
+    function GetModuleName : string; virtual;
     function OpenMainWindow : Integer; virtual;
     function OpenMainWindowInAddMode : Integer; virtual;
     function OpenModule : boolean; virtual;
@@ -25,7 +25,7 @@ type
     function GiveObjectByInterface (p_GUID : TGUID) : IInterface; virtual;
     function GetSelfInterface : TGUID; virtual;
     function GetPreferences : TDictionary<string, string>;
-    function GetPreference(const p_Key : string) : string;
+    function GetPreference(const p_Key : string; const p_Default : string = '') : string;
     procedure SetPreference(const p_Key : string; const p_Value : string);
     function InterfaceExists (p_GUID : TGUID) : boolean;
     procedure RegisterClass (p_GUID : TGUID; p_Class : TInterfacedClass; const p_Args : array of TValue);
@@ -86,10 +86,10 @@ begin
   Result := FObjectList;
 end;
 
-function TBaseModule.GetPreference(const p_Key: string): string;
+function TBaseModule.GetPreference(const p_Key : string; const p_Default : string = '') : string;
 begin
   if not FPreferences.TryGetValue(p_Key, Result) then
-    Result := '';
+    Result := p_Default;
 end;
 
 function TBaseModule.GetPreferences: TDictionary<string, string>;
