@@ -12,7 +12,9 @@ type
   ['{3F76C9A4-0DA3-4EE4-AABC-F47A5C4C1D50}']
     procedure RegisterModules (p_ModuleList : TList<IModule>);
     procedure SetContainer (p_Container : IContainer);
+    function GetVersion : Double;
     property Container : IContainer write SetContainer;
+    property Version : Double read GetVersion;
   end;
 
   IPreferenceRepository = interface

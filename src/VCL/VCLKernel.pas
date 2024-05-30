@@ -77,7 +77,7 @@ begin
   Open;
   pomWind := TWndSkeleton.Create(nil);
   try
-    pomWind.Init (p_MainFrame.Create (pomWind), p_FrameTitle, false, false);
+    pomWind.Init (p_MainFrame.Create (pomWind), p_FrameTitle, FKernel.MainContainer.Version, false, false);
     pomWind.ShowModal;
   finally
     FreeAndNil (pomWind);

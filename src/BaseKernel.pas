@@ -12,11 +12,17 @@ type
   public
     procedure RegisterModules (p_ModuleList : TList<IModule>); virtual;
     procedure SetContainer (p_Container: IContainer);
+    function GetVersion : Double;
   end;
 
 implementation
 
 { TContainer }
+
+function TContainer.GetVersion: Double;
+begin
+  Result := 0.0;
+end;
 
 procedure TContainer.RegisterModules(p_ModuleList: TList<IModule>);
 begin

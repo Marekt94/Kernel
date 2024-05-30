@@ -28,6 +28,7 @@ type
     destructor Destroy; override;
     function Init (p_ChildPanel : TFrame;
                    p_Title      : string;
+                   p_Version    : Double;
                    p_WithNavigationKeys : boolean = true;
                    p_FullScreen : Boolean = false) : TForm; virtual;
     property AfterShow: TProc read FAfterShow write FAfterShow;
@@ -87,15 +88,18 @@ end;
 //function creating basic window
 function TWndSkeleton.Init (p_ChildPanel : TFrame;
                    p_Title      : string;
+                   p_Version    : Double;
                    p_WithNavigationKeys : boolean = true;
                    p_FullScreen : Boolean = false) : TForm;
+const
+  cTitle = '%s (ver. %f)';
 var
   pomWidth : Integer;
 begin
   FChildPanel := p_ChildPanel;
   FChildPanel.Parent := pnlMain;
   FChildPanel.Align  := alClient;
-  Caption := p_Title;
+  Caption := Format(cTitle, [p_Title, p_Version]);
   if p_FullScreen then
     WindowState := wsMaximized
   else
